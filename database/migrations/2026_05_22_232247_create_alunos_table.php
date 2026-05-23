@@ -10,14 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {   
-        Schema::create('cursos', function (Blueprint $table) {
+    {
+        Schema::create('alunos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titulo');
-            $table->string('descricao');
-            $table->string('imagem')->nullable();
-            $table->decimal('valor', 5,2);
-            $table->enum('publicado', ['sim','não'])->default('não');
+            $table->string('nome');
+            $table->string('celular');
+            $table->string('imagem')->nullable();          
+            $table->unsignedBigInteger('id_curso');
+            $table->foreign('id_curso')->references('id')->on('cursos');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cursos');
+        Schema::dropIfExists('alunos');
     }
 };

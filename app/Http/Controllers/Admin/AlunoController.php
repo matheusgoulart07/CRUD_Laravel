@@ -4,32 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Curso;
+use App\Models\Aluno;
 
-class CursoController extends Controller
+class AlunoController extends Controller
 {
     //
     public function index() {
-        $rows = Curso::all();
-        return view('Admin.cursos.index', compact('rows'));
+        $rows = Aluno::all();
+        return view('Admin.alunos.indexAlunos', compact('rows'));
     }
 
     public function adicionar() {
-    return view('admin.cursos.adicionar');
+    return view('admin.alunos.adicionarAlunos');
     }
     public function editar($id) {
     // repare que ele recebe o id da ROTA
-    $linha = Curso::find($id);
+    $linha = Aluno::find($id);
     // carrega o registro (realiza um select e um fetch internamente)
-    return view('admin.cursos.editar',compact('linha'));
+    return view('admin.alunos.editarAlunos',compact('linha'));
     // manda o registro encontrado para ser editado na visão
     }
     public function excluir($id) {
     // repare que ele recebe o id da ROTA
-    Curso::find($id)->delete();
+    Aluno::find($id)->delete();
     // apos selecionar o registro, é chamado o
     // método DELETE do OBJETO registro
-    return redirect()->route('admin.cursos');
+    return redirect()->route('admin.alunos');
     // abre a visão da lista de cursos
 }
 
@@ -44,14 +44,14 @@ class CursoController extends Controller
     if($req->hasFile('arquivo')){
     $imagem = $req->file('arquivo');
     $num = rand(1111,9999);
-    $dir = "img/cursos/";
+    $dir = "img/alunos/";
     $ex = $imagem->guessClientExtension();
     $nomeImagem = "imagem_".$num.".".$ex;
     $imagem->move($dir,$nomeImagem);
     $dados['imagem'] = $dir."/".$nomeImagem;
     }
-    Curso::create($dados);
-    return redirect()->route('admin.cursos');
+    Aluno::create($dados);
+    return redirect()->route('admin.alunos');
 }
 
     public function atualizar(Request $req, $id)
@@ -65,16 +65,13 @@ class CursoController extends Controller
     if($req->hasFile('arquivo')){
     $imagem = $req->file('arquivo');
     $num = rand(1111,9999);
-    $dir = "img/cursos/";
+    $dir = "img/alunos/";
     $ex = $imagem->guessClientExtension();
     $nomeImagem = "imagem_".$num.".".$ex;
     $imagem->move($dir,$nomeImagem);
     $dados['imagem'] = $dir."/".$nomeImagem;
     }
-    Curso::find($id)->update($dados);
-    return redirect()->route('admin.cursos');
+    Aluno::find($id)->update($dados);
+    return redirect()->route('admin.alunos');
     }
-
 }
-
-
